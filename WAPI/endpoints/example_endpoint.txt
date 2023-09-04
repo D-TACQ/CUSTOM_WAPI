@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+def handle_action_a(var1, var2, **kwargs): #POST /endpoint JSON {var1, var2} 
+    return True, 'action_a success'
+
+def handle_state_1(response): #GET /state_1 
+    print('handle_state_1')
+
+    response.body = 'handle_state_1'
+    response.status = 200
+    response.content_type = 'text/plain'
+    return response
+
+
+manifest = {
+    'name' : 'Test endpoint',
+    'html' : 'test_endpoint.html',
+    'actions': {
+        'action_a' : handle_action_a,
+    },
+    'states': {
+        'state_1' : handle_state_1,
+    },
+}

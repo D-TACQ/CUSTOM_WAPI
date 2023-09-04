@@ -11,8 +11,8 @@ body{
 :root {
     --accent: #002AFF;
     --accent_light: #4766ff;
-    --code_gray: #dddddd;
-    --input_grey: #dddddd;
+    --code_grey: #dddddd;
+    --input_grey: #dcdde1;
     --text-color: #111;
 }
 .wrapper{
@@ -81,7 +81,6 @@ body{
     transform: translate(-50%, -50%);
 }
 
-
 .logo{
     margin-right: 20px;
 }
@@ -93,16 +92,25 @@ body{
 }
 .breadcrumb{
     display: inline-block;
+    font-size: 1.5em;
+}
+.breadcrumb a {
+    color: var(--text-color);
 }
 
 .drop_area{
     width: 15rem;
     height: 15rem;
-    background-color: #dddddd;
+    background-color: var(--input_grey);
     overflow: hidden;
-    border: 3px dashed black;
+    border: 3px double var(--text-color);
     border-radius: 1rem;
     position: relative;
+}
+.drop_area.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    border-style: dashed;
 }
 .drop_area input{
     width: 100%;
@@ -111,9 +119,11 @@ body{
     box-sizing: border-box;
     opacity: 0;
     z-index: 500;
+    position: relative;
 }
 .drop_area span{
     z-index: 499;
+    user-select: none;
 }
 .drop_area:hover{
     border-color: var(--accent);
@@ -131,7 +141,7 @@ body{
 }
 .form-row input, .form-row select{
     border: none;
-    background-color: var(--code_gray);
+    background-color: var(--input_grey);
     outline: none;
     padding: 5px 10px;
     margin: 1px 0px;
@@ -151,7 +161,7 @@ body{
 
 .code_block{
     font-family: monospace;
-    background-color: var(--code_gray);
+    background-color: var(--code_grey);
     margin-top: 1rem;
     padding: 1rem;
 }

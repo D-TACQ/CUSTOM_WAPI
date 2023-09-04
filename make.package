@@ -3,7 +3,7 @@
 DC=$(date +%y%m%d%H%M)
 SEQ=40
 PKG=custom_wapi
-
+ 
 rm -Rf opkg/*
 mkdir -p opkg/usr/local/WAPI
 mkdir -p opkg/usr/local/init
@@ -11,6 +11,7 @@ mkdir -p release
 
 cp -r WAPI/* opkg/usr/local/WAPI
 cp init/* opkg/usr/local/init
+rm -rf opkg/usr/local/WAPI/.vscode
 
 tar cvzf release/${SEQ}-${PKG}-${DC}.tgz -C opkg .
 ls -l release/${SEQ}-${PKG}-${DC}.tgz

@@ -28,14 +28,14 @@ def root_handler():
 def endpoint_handler():
     global response
 
-    default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>"
-    print(f"[endpoint_handler] POST")
-    print(json.dumps(request.json, indent=2, default=default))
+    #default = lambda o: f"<<non-serializable: {type(o).__qualname__}>>"
+    #print(f"[endpoint_handler] POST")
+    #print(json.dumps(request.json, indent=2, default=default))
 
     def error_json(msg):
         error = {
             'error': True,
-            'msg' : msg,
+            'msg' : type(msg).__name__,
         }
         return error
 
@@ -124,8 +124,8 @@ def import_endpoints(endpoints):
     for endpoint in endpoints:
         filepath = os.path.join(api.endpoints_dir, f"{endpoint}.py")
         if not os.path.isfile(filepath):
-            print(f"[import_endpoints] {endpoint} not found exiting :/")
-            exit(1)
+            print(f"[import_endpoints] {endpoint} not found ignoring")
+            continue
         print(f"[import_endpoints] NEW endpoint {endpoint}")
         module = importlib.import_module(f"endpoints.{endpoint}")
         if 'actions' in module.manifest:

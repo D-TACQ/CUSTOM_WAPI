@@ -18,16 +18,16 @@
                     </a>
                 </div>
                 <div class="breadcrumb">
-                    <a href="/">root</a>
-                    <span>> AWG Composer</span>
+                    <a href="/">Root</a> / 
+                    <span> AWG Composer</span>
                 </div>
             </div>
             <div class="main">
                 <div class="content flex">
                     <div class="upload third">
                         <h3>Upload</h3>
-                        <div class="drop_area hcenter">
-                            <span class="center">Click or drop file</span>
+                        <div class="drop_area hcenter" id="drop-area">
+                            <span class="center no_touch">Click or drop file</span>
                             <input type="file" id="upload-input"/>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                                         <option pre="--awg_mode ">oneshot_rearm</option>
                                         <option pre="--awg_mode ">oneshot</option>
                                         <option pre="--awg_mode ">continuous</option>
-                                        <option pre="-o /tmp/" post=".dat" editable>filename</option>
+                                        <option pre="-o /tmp/" post=".dat" editable>composed_file</option>
                                     </select>
                                 </div>
                                 <div class="form-row">
@@ -69,11 +69,12 @@
                             <h3>LPP</h3>
                             <div class="form">
                                 <div class="form-row">
-                                    <span>LPP Rearm: </span>
+                                    <span>LPP Rearm </span>
                                     <input type="number" id="lpp-input" max="32" min="0">
                                 </div>
-                                <button id="soft-trigger" class="med_button">Soft Trigger</button>
                             </div>
+                            <button id="soft-trigger" class="med_button">Soft Trigger</button>
+                            <span id="lpp-status"></span>
                         </div>
                     </div>
                     <div class="manifest full">

@@ -1,12 +1,9 @@
-console.log('Composer.js Loaded');
+console.log('composer.js Loaded');
 
 const url_base = new URL(window.location.pathname, window.location.origin);
 const api_url = new URL(`http://${HOST}:${PORT}`);
 console.log(`Api url: ${api_url.toString()}`);
 
-
-
-/*CHECKED*/
 function upload_lines(e){
     const NEWLINE = '\n';
     file = e.target.files[0];
@@ -40,7 +37,6 @@ function upload_lines(e){
     }
     reader.readAsText(file);
 }
-
 function update_manifest(){
     let url = new URL(`${api_url.toString()}manifest`);
     var manifest_contents = document.querySelector('#manifest-block');
@@ -57,7 +53,6 @@ function update_manifest(){
         manifest_contents.classList = 'code_block animate_update has_manifest';
     });
 }
-
 function erase_mainfest(e){
     let payload = {
         'action' : 'erase_mainfest',
@@ -69,7 +64,6 @@ function erase_mainfest(e){
         update_manifest();
     }, JSON.stringify(payload));
 }
-
 function start_compose(e){
     console.log(`[start_compose]`)
 
@@ -115,7 +109,6 @@ function download_compose(){
     console.log(`[download_compose] ${url.toString()}`);
     send_request(url.toString(), 'GET', function (code, response){
         if(code >= 200 && code < 300){
-            console.log(response)
             response = JSON.parse(response);
             url = response['url'];
             filename = response['filename'];
@@ -131,48 +124,63 @@ function download_compose(){
         alert(error);
     });
 }
-
 var lpp_timeout = null
 function lpp_update(e){
+    value = e.target.value
+    clearTimeout(lpp_timeout);
+    if(!value){
+        return
+    }
     function send_lpp(rearm_num){
+        compose_status = document.querySelector('#lpp-status');
+        compose_status.classList = '';
         let payload = {
             'action' : 'lpp_rearm',
             'data' : {
                 'rearm_num' : rearm_num
             }
         }
-        console.log(payload)
         let url = new URL(`${api_url.toString()}endpoint`);
         send_request(url.toString(), 'POST', (code, response) => {
             if(code >= 200 && code < 300){
-                console.log(response)
+                compose_status.classList = 'animate_update';
+                compose_status.innerText = response;
                 return;
             }
             alert(response);
         }, JSON.stringify(payload));
     }
-    clearTimeout(lpp_timeout);
-    lpp_timeout = setTimeout(send_lpp, 1000, e.target.value);
+    lpp_timeout = setTimeout(send_lpp, 700, value);
 }
-
 function trigger_soft_trigger(){
     console.log('trigger_soft_trigger')
+    compose_status = document.querySelector('#lpp-status');
+    compose_status.classList = '';
     let payload = {
         'action' : 'trigger_soft_trigger',
         'data' : {}
     }
-    console.log(payload)
     let url = new URL(`${api_url.toString()}endpoint`);
     send_request(url.toString(), 'POST', (code, response) => {
         if(code >= 200 && code < 300){
-            console.log(response)
+            compose_status.classList = 'animate_update';
+            compose_status.innerText = response;
             return;
         }
         alert(response);
     }, JSON.stringify(payload));
 }
 
-
+function animate_drop_area(e){
+    drop_area = document.querySelector('#drop-area');
+    if(e.type == 'dragenter' || e.type == 'dragover'){
+        drop_area.classList.add('active')
+    }
+    if(e.type == 'dragleave' || e.type == 'drop'){
+        drop_area.classList.remove('active')
+    }
+    e.stopPropagation()
+}
 
 //Execution starts here
 window.onload = ()=>{
@@ -184,6 +192,7 @@ window.onload = ()=>{
         '#compose-download': [['click'], [download_compose]],
         '#lpp-input': [['input'], [lpp_update]],
         '#soft-trigger': [['click'], [trigger_soft_trigger]],
+        '#drop-area': [['dragenter', 'dragleave', 'dragover', 'drop'],[animate_drop_area]],
     }
     init_event_listeners(listener_map);
 

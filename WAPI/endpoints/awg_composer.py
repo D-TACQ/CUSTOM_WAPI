@@ -49,10 +49,10 @@ def handle_erase_mainfest(**kwargs):
     os.system(f"rm -rf {globals.root_dir}")
     return True, 'mainfest erased'
 
-def handle_lpp_rearm(rearm_num:int, **kwargs):
+def handle_lpp_rearm(rearm_num, **kwargs):
     print('handle_lpp_rearm')
     if not (0 <= int(rearm_num) <= 32):
-        return False, 'lpp_rearm value out of range out of range'
+        return False, 'lpp_rearm value out of range'
     os.system(f"set.site 0 lpp_rearm {rearm_num}")
     return True, f"lpp_rearm set to {rearm_num}"
 

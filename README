@@ -1,0 +1,7 @@
+To enable endpoints create file /mnt/local/endpoints.wapi and add:
+
+export ENDPOINTS='endpoint1 endpoint2 endpoint3'
+
+ie
+acq1001_590> cat /mnt/local/endpoints.wapi 
+export ENDPOINTS='awg_composer'

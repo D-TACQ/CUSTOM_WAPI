@@ -4,11 +4,10 @@ echo "[WAPI] Starting"
 cd /usr/local/HAPI
 source ./setpath
 
-source /mnt/local/wapi_endpoints
+source /mnt/local/endpoints.wapi
 echo "[WAPI] Loading ${ENDPOINTS}"
 
-/usr/local/WAPI/wapi_server.py $ENDPOINTS
-#/usr/local/WAPI/wapi_server.py $ENDPOINTS &>/dev/null &
+/usr/local/WAPI/wapi_server.py $ENDPOINTS &>/dev/null &
 
 #create file at /mnt/local/endpoints with:
 #   export ENDPOINTS='endpoint1 endpoint2 endpoint3'

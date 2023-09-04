@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AWG Composer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/base.css">
+        <script src="config.js"></script>
+        <script defer src="static/base.js"></script>
+        <script defer src="static/composer.js"></script>
+        <link rel="icon" type="image/x-icon" href="/d-tacq/favicon.ico">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                <div class="logo">
+                    <a href="https://www.d-tacq.com/">
+                        <img src="static/img/favicon.ico">
+                    </a>
+                </div>
+                <div class="breadcrumb">
+                    <a href="/">root</a>
+                    <span>> AWG Composer</span>
+                </div>
+            </div>
+            <div class="main">
+                <div class="content flex">
+                    <div class="upload third">
+                        <h3>Upload</h3>
+                        <div class="drop_area hcenter">
+                            <span class="center">Click or drop file</span>
+                            <input type="file" id="upload-input"/>
+                        </div>
+                    </div>
+                    <div class="two-thirds">
+                        <div class="compose">
+                            <h3>Compose</h3>
+                            <div class="form">
+                                <div class="form-row">
+                                    <span>Output</span>
+                                    <select class="live_input" target="#compose-output">
+                                        <option pre="--awg_mode ">oneshot_rearm</option>
+                                        <option pre="--awg_mode ">oneshot</option>
+                                        <option pre="--awg_mode ">continuous</option>
+                                        <option pre="-o /tmp/" post=".dat" editable>filename</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <span>Pattern</span>
+                                    <input class="live_input" type="text" autocomplete="off" target="#compose-pattern" value="5*AA 5*BB">
+                                </div>
+                                <div class="form-row">
+                                    <span>Nrep</span>
+                                    <input class="live_input" type="number" pre="--nreps " autocomplete="off" target="#compose-nrep">
+                                </div>
+                            </div>
+                            <div class="code_block">
+                                <div class="live_output">
+                                    <span>/mnt/local/awg_composer</span>
+                                    <span id="compose-output" pre="--awg_mode " post="">oneshot_rearm</span>
+                                    <span id="compose-nrep" ></span>
+                                    <span id="compose-pattern">5*AA 5*BB</span>
+                                </div>
+                            </div>
+                            <button id="compose-start" class="med_button">Compose</button>
+                            <button id="compose-download" class="med_button">Download</button>
+                            <span id="compose-status"></span>
+                        </div>
+                        <div class="lpp">
+                            <h3>LPP</h3>
+                            <div class="form">
+                                <div class="form-row">
+                                    <span>LPP Rearm: </span>
+                                    <input type="number" id="lpp-input" max="32" min="0">
+                                </div>
+                                <button id="soft-trigger" class="med_button">Soft Trigger</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="manifest full">
+                        <h3>Manifest</h3>
+                        <div class="code_block" id="manifest-block"></div>
+                        <button id="manifest-erase" class="med_button">Erase All</button>
+                        <label class="refresh_mainfest">Refresh?<input id="manifest-refresh" autocomplete="off" type="checkbox" checked="true"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="copymark">2023 d-tacq</span>
+            </div>
+        </div>
+    </body>
+</html>

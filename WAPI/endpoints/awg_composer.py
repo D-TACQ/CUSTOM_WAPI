@@ -40,7 +40,7 @@ def handle_run_composer(output, pattern, nrep='', **kwargs):
         nrep = f"--nreps {escape_input(nrep)}"
 
     pattern = escape_input(pattern)
-    cmd = f"/mnt/local/awg_composer {output} {nrep} {pattern}"
+    cmd = f"/usr/local/bin/awg_composer {output} {nrep} {pattern}"
     threading.Thread(target=run_compose, args=(cmd,)).start()
     return True, f"Compose started {cmd}"
 

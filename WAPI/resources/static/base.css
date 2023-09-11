@@ -14,6 +14,7 @@ body{
     --code_grey: #dddddd;
     --input_grey: #dcdde1;
     --text-color: #111;
+    --highlight: #f6e58d;
 }
 .wrapper{
     height: 100%;
@@ -152,11 +153,10 @@ body{
 .live_output span{
     outline: none;
 }
-.live_output span:before{
-    content: attr(pre);
-}
-.live_output span:after{
-    content: attr(post);
+.value[contenteditable="true"] {
+    background-color: var(--highlight);
+    display: inline-block;
+    min-width: 0.5rem;
 }
 
 .code_block{
@@ -211,18 +211,11 @@ body{
 
 
 
-/*remove?*/
-.upload{
-}
-.compose{
-}
-.lpp{
-}
-.manifest{
-}
+/*compose only styles*/
 .manifest button{
     display: none;
 }
 .has_manifest + button{
     display: inline-block;
 }
+

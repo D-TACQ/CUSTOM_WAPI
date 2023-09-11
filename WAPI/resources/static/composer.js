@@ -68,9 +68,9 @@ function start_compose(e){
     console.log(`[start_compose]`)
 
     compose_status = document.querySelector('#compose-status');
-    output = document.querySelector('#compose-output').innerText;
-    pattern = document.querySelector('#compose-pattern').innerText;
-    nrep = document.querySelector('#compose-nrep').innerText;
+    output = document.querySelector('#compose-output .value').innerText;
+    pattern = document.querySelector('#compose-pattern .value').innerText;
+    nrep = document.querySelector('#compose-nrep .value').innerText;
 
     function poll_until_complete(){
         let url = new URL(`${api_url.toString()}compose_status`);

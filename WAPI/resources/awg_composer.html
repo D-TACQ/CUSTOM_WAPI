@@ -37,7 +37,7 @@
                             <div class="form">
                                 <div class="form-row">
                                     <span>Output</span>
-                                    <select class="live_input" target="#compose-output">
+                                    <select class="live_input" target="#compose-output" autocomplete="off">
                                         <option pre="--awg_mode ">oneshot_rearm</option>
                                         <option pre="--awg_mode ">oneshot</option>
                                         <option pre="--awg_mode ">continuous</option>
@@ -55,10 +55,16 @@
                             </div>
                             <div class="code_block">
                                 <div class="live_output">
-                                    <span>/usr/local/bin/awg_composer</span>
-                                    <span id="compose-output" pre="--awg_mode " post="">oneshot_rearm</span>
-                                    <span id="compose-nrep" ></span>
-                                    <span id="compose-pattern">5*AA 5*BB</span>
+                                    <span>/usr/local/bin/awg_composer </span>
+                                    <span id="compose-output">
+                                        <span class="pre">--awg_mode </span><span class="value">oneshot_rearm</span><span class="post"></span>
+                                    </span>
+                                    <span id="compose-nrep" >
+                                        <span class="pre"></span><span class="value"></span><span class="post"></span>
+                                    </span>
+                                    <span id="compose-pattern">
+                                        <span class="pre"></span><span class="value">5*AA 5*BB</span><span class="post"></span>
+                                    </span>
                                 </div>
                             </div>
                             <button id="compose-start" class="med_button">Compose</button>

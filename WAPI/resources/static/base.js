@@ -46,12 +46,10 @@ function live_input_handler(e, elem){
     if(elem.tagName == 'SELECT'){
         elem = elem.options[elem.selectedIndex]
     }
-    elem.hasAttribute('editable') ? target.setAttribute('contenteditable', true) : target.setAttribute('contenteditable', false);
-    target.innerText = value;
-    if(elem.hasAttribute('pre')){
-        target.setAttribute('pre', value ? elem.getAttribute('pre') : '')
-    }
-    if(elem.hasAttribute('post')){
-        target.setAttribute('post', value ? elem.getAttribute('post') : '')
-    }
+
+    target.querySelector('.value').setAttribute('contenteditable', elem.hasAttribute('editable'))
+    target.querySelector('.value').innerText = value;
+    target.querySelector('.pre').innerText = value ? elem.getAttribute('pre') : ''
+    target.querySelector('.post').innerText = value ? elem.getAttribute('post') : ''
+
 }

@@ -139,7 +139,7 @@ def run_compose(cmd):
 
 ##manifest
 manifest = {
-    'name' : 'Awg Composer',
+    'name' : 'AWG Composer',
     'html' : 'awg_composer.html',
     'actions': {
         'build_template': handle_build_template,

@@ -1,13 +1,16 @@
 #!/bin/sh
 
+hapi_dir=/usr/local/HAPI
+config=/mnt/local/sysconfig/endpoints.wapi
 echo "[WAPI] Starting"
-cd /usr/local/HAPI
+
+[ ! -e $hapi_dir ] && echo "[WAPI] Error: No HAPI" && exit 1
+cd $hapi_dir
 source ./setpath
 
-source /mnt/local/endpoints.wapi
+
+[ ! -e $config ] && echo "[WAPI] Error: No config" && exit 1
+source $config
 echo "[WAPI] Loading ${ENDPOINTS}"
 
 /usr/local/WAPI/wapi_server.py $ENDPOINTS &>/dev/null &
-
-#create file at /mnt/local/endpoints with:
-#   export ENDPOINTS='endpoint1 endpoint2 endpoint3'

@@ -70,7 +70,7 @@ function start_compose(e){
     compose_status = document.querySelector('#compose-status');
     output = document.querySelector('#compose-output .value').innerText;
     pattern = document.querySelector('#compose-pattern .value').innerText;
-    nrep = document.querySelector('#compose-nrep .value').innerText;
+    nreps = document.querySelector('#compose-nreps .value').innerText;
     segment = document.querySelector('#compose-segment .value').innerText;
 
     function poll_until_complete(){
@@ -92,7 +92,7 @@ function start_compose(e){
         'data' : {
             'output' : output,
             'pattern' : pattern,
-            'nrep' : nrep,
+            'nreps' : nreps,
             'segment' : segment,
         }
     }

@@ -160,6 +160,9 @@ def generate_config(port):
     with open(os.path.join(api.web_dir, 'config.js'), 'w') as file:
         file.writelines(lines)
 
+    with open('/var/www/apps.port', 'w') as file:
+        file.write(str(port))
+
 def hijack_nginx():
     root_index = '/var/www/d-tacq/acq_main_page.html'
     apps_index = '/var/www/apps/index.html'

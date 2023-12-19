@@ -19,31 +19,32 @@ def handle_build_template(lines, **kwargs):
     print('handle_build_template')
     return build_templates.from_array(lines)
 
-def handle_run_composer(output, pattern, nrep='', segment='', **kwargs):
+def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
     print('handle_run_composer')
     print(f"output {output}")
     print(f"output {pattern}")
-    print(f"output {nrep}")
+    print(f"output {nreps}")
     if globals.compose_status[0]:
         return False, f"Compose Running"
     if not get_manifest():
         return False, f"No Manifest"
     
     awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
+    args = []
 
     if output in awg_outputs:
-        output = f"--awg_mode {output}"
+        args.append(f"--awg_mode {output}")
     else:
         globals.last_file = f"{escape_input(output)}.dat"
-        output = f"-o /tmp/{globals.last_file}"
-    if nrep:
-        nrep = f"--nreps {escape_input(nrep)}"
+        args.append(f"-o /tmp/{globals.last_file}")
+    if nreps:
+        args.append(f"--nreps {escape_input(nreps)}")
 
     if segment:
-        segment = f"--abcde {escape_input(segment)}"
+        args.append(f"--abcde {escape_input(segment)}")
 
-    pattern = escape_input(pattern)
-    cmd = f"/usr/local/bin/awg_composer {output} {nrep} {segment} {pattern}"
+    args.append(escape_input(pattern))
+    cmd = f"/usr/local/bin/awg_composer {' '.join(args)}"
     print(f"Running CMD: {cmd}")
     threading.Thread(target=run_compose, args=(cmd,)).start()
     return True, f"Compose started {cmd}"

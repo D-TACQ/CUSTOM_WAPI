@@ -38,6 +38,7 @@
                                 <div class="form-row">
                                     <span>Output</span>
                                     <select class="live_input" target="#compose-output" autocomplete="off">
+                                        <option></option>
                                         <option pre="--awg_mode ">oneshot_rearm</option>
                                         <option pre="--awg_mode ">oneshot</option>
                                         <option pre="--awg_mode ">continuous</option>
@@ -46,7 +47,7 @@
                                 </div>
                                 <div class="form-row">
                                     <span>Pattern</span>
-                                    <input class="live_input" type="text" autocomplete="off" target="#compose-pattern" value="5*AA 5*BB">
+                                    <input class="live_input" type="text" autocomplete="off" target="#compose-pattern">
                                 </div>
                                 <div class="form-row">
                                     <span>Nreps</span>
@@ -64,7 +65,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="code_block">
+                            <div class="code_block" id="compose_cmd">
                                 <div class="live_output">
                                     <span>/usr/local/bin/awg_composer </span>
                                     <span id="compose-output">

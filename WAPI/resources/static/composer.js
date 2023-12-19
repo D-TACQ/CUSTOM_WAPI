@@ -184,6 +184,25 @@ function animate_drop_area(e){
     e.stopPropagation()
 }
 
+function sync_last_compose(){
+    let url = new URL(`${api_url.toString()}compose_last`);
+    console.log(`[compose_last] ${url.toString()}`);
+    compose_cmd = document.querySelector('#compose_cmd');
+    compose_cmd.classList.remove('animate_update');
+    send_request(url.toString(), 'GET', function (code, response){
+        if(code >= 200 && code < 300){
+            response = JSON.parse(response);
+            for (const [key, values] of Object.entries(response)) {
+                elem = document.querySelector(`#compose-${key}`);
+                for (let target of ['pre', 'value', 'post']){
+                    elem.querySelector(`.${target}`).innerText = values[target];
+                }
+            }
+            compose_cmd.classList.add('animate_update');
+        }
+    });
+}
+
 //Execution starts here
 window.onload = ()=>{
     listener_map = {
@@ -205,5 +224,6 @@ window.onload = ()=>{
         }
         setTimeout(poll_manifest, 5000);
     }
+    sync_last_compose();
     poll_manifest();
 }

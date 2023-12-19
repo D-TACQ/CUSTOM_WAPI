@@ -12,6 +12,7 @@ class globals:
     compose_status = [False, None]
     root_dir = '/tmp/AWG/'
     last_file = 'filename.dat'
+    last_compose = {}
 
 
 ##actions
@@ -29,22 +30,30 @@ def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
     if not get_manifest():
         return False, f"No Manifest"
     
+    def new_arg(value, pre = '', post = ''):
+        return {
+            'pre': pre,
+            'value': escape_input(value),
+            'post': post,
+            'full': f"{pre}{value}{post}"
+        }
+    
     awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
-    args = []
-
+    args = {}
     if output in awg_outputs:
-        args.append(f"--awg_mode {output}")
+        args['output'] = new_arg(output, '--awg_mode ')
     else:
         globals.last_file = f"{escape_input(output)}.dat"
-        args.append(f"-o /tmp/{globals.last_file}")
+        args['output'] = new_arg(output, '-o /tmp/', '.dat')
     if nreps:
-        args.append(f"--nreps {escape_input(nreps)}")
+        args['nreps'] = new_arg(nreps, '--nreps ')
 
     if segment:
-        args.append(f"--abcde {escape_input(segment)}")
+        args['segment'] = new_arg(segment, '--abcde ')
+    args['pattern'] = new_arg(pattern)
 
-    args.append(escape_input(pattern))
-    cmd = f"/usr/local/bin/awg_composer {' '.join(args)}"
+    globals.last_compose = args
+    cmd = f"/usr/local/bin/awg_composer {' '.join([value.get('full') for key, value in args.items()])}"
     print(f"Running CMD: {cmd}")
     threading.Thread(target=run_compose, args=(cmd,)).start()
     return True, f"Compose started {cmd}"
@@ -115,6 +124,11 @@ def handle_compose_download(response, api):
     response.body = json.dumps(payload)
     return response
 
+def handle_last_compose(response, api):
+    response.status = 200
+    response.body = json.dumps(globals.last_compose)
+    return response
+
 #helper functions
 def escape_input(user_input):
     colons_slashes = r"[;:\/]*"
@@ -157,5 +171,6 @@ manifest = {
         'manifest' : handle_manifest,
         'compose_status' : handle_compose_status,
         'compose_download' : handle_compose_download,
+        'compose_last' : handle_last_compose,
     },
 }

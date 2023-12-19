@@ -52,6 +52,17 @@
                                     <span>Nrep</span>
                                     <input class="live_input" type="number" pre="--nreps " autocomplete="off" target="#compose-nrep">
                                 </div>
+                                <div class="form-row">
+                                    <span>Segment</span>
+                                    <select class="live_input" target="#compose-segment" autocomplete="off">
+                                        <option></option>
+                                        <option pre="--abcde ">A</option>
+                                        <option pre="--abcde ">B</option>
+                                        <option pre="--abcde ">C</option>
+                                        <option pre="--abcde ">D</option>
+                                        <option pre="--abcde ">E</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="code_block">
                                 <div class="live_output">
@@ -60,6 +71,9 @@
                                         <span class="pre">--awg_mode </span><span class="value">oneshot_rearm</span><span class="post"></span>
                                     </span>
                                     <span id="compose-nrep" >
+                                        <span class="pre"></span><span class="value"></span><span class="post"></span>
+                                    </span>
+                                    <span id="compose-segment">
                                         <span class="pre"></span><span class="value"></span><span class="post"></span>
                                     </span>
                                     <span id="compose-pattern">

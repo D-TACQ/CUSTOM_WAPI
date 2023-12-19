@@ -71,6 +71,7 @@ function start_compose(e){
     output = document.querySelector('#compose-output .value').innerText;
     pattern = document.querySelector('#compose-pattern .value').innerText;
     nrep = document.querySelector('#compose-nrep .value').innerText;
+    segment = document.querySelector('#compose-segment .value').innerText;
 
     function poll_until_complete(){
         let url = new URL(`${api_url.toString()}compose_status`);
@@ -91,7 +92,8 @@ function start_compose(e){
         'data' : {
             'output' : output,
             'pattern' : pattern,
-            'nrep' : nrep
+            'nrep' : nrep,
+            'segment' : segment,
         }
     }
     console.log(payload)

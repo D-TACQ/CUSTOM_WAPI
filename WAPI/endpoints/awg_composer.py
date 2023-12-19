@@ -19,7 +19,7 @@ def handle_build_template(lines, **kwargs):
     print('handle_build_template')
     return build_templates.from_array(lines)
 
-def handle_run_composer(output, pattern, nrep='', **kwargs):
+def handle_run_composer(output, pattern, nrep='', segment='', **kwargs):
     print('handle_run_composer')
     print(f"output {output}")
     print(f"output {pattern}")
@@ -39,8 +39,12 @@ def handle_run_composer(output, pattern, nrep='', **kwargs):
     if nrep:
         nrep = f"--nreps {escape_input(nrep)}"
 
+    if segment:
+        segment = f"--abcde {escape_input(segment)}"
+
     pattern = escape_input(pattern)
-    cmd = f"/usr/local/bin/awg_composer {output} {nrep} {pattern}"
+    cmd = f"/usr/local/bin/awg_composer {output} {nrep} {segment} {pattern}"
+    print(f"Running CMD: {cmd}")
     threading.Thread(target=run_compose, args=(cmd,)).start()
     return True, f"Compose started {cmd}"
 

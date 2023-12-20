@@ -45,7 +45,10 @@ def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
 
     awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
     if output in awg_outputs:
+        if not segment:
+            return False, f"Segment is required" #possibly temp
         args['output'] = new_arg(output, '--awg_mode ')
+
     else:
         globals.last_file = f"{escape_input(output)}.dat"
         args['output'] = new_arg(output, '-o /tmp/', '.dat')

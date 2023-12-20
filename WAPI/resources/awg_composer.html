@@ -37,9 +37,9 @@
                             <div class="form">
                                 <div class="form-row">
                                     <span>Output</span>
-                                    <select class="live_input" target="#compose-output" autocomplete="off">
+                                    <select class="live_input" target="#compose-output" autocomplete="off" id="input-compose-output">
                                         <option></option>
-                                        <option pre="--awg_mode ">oneshot_rearm</option>
+                                        <option pre="--awg_mode " selected="selected">oneshot_rearm</option>
                                         <option pre="--awg_mode ">oneshot</option>
                                         <option pre="--awg_mode ">continuous</option>
                                         <option pre="-o /tmp/" post=".dat" editable>composed_file</option>
@@ -47,15 +47,15 @@
                                 </div>
                                 <div class="form-row">
                                     <span>Pattern</span>
-                                    <input class="live_input" type="text" autocomplete="off" target="#compose-pattern">
+                                    <input class="live_input" type="text" autocomplete="off" target="#compose-pattern" id="input-compose-pattern" value="5*AA 5*BB">
                                 </div>
                                 <div class="form-row">
                                     <span>Nreps</span>
-                                    <input class="live_input" type="number" pre="--nreps " autocomplete="off" target="#compose-nreps">
+                                    <input class="live_input" type="number" pre="--nreps " autocomplete="off" target="#compose-nreps" id="input-compose-nreps">
                                 </div>
                                 <div class="form-row">
                                     <span>Segment</span>
-                                    <select class="live_input" target="#compose-segment" autocomplete="off">
+                                    <select class="live_input" target="#compose-segment" autocomplete="off" id="input-compose-segment">
                                         <option></option>
                                         <option pre="--abcde ">A</option>
                                         <option pre="--abcde ">B</option>

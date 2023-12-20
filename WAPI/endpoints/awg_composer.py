@@ -29,27 +29,28 @@ def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
         return False, f"Compose Running"
     if not get_manifest():
         return False, f"No Manifest"
-    
+
     def new_arg(value, pre = '', post = ''):
+        if not value:
+            return {'pre': '', 'value': '' , 'post': '', 'full': ''}
         return {
             'pre': pre,
             'value': escape_input(value),
             'post': post,
             'full': f"{pre}{value}{post}"
         }
-    
-    awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
     args = {}
+
+
+    awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
     if output in awg_outputs:
         args['output'] = new_arg(output, '--awg_mode ')
     else:
         globals.last_file = f"{escape_input(output)}.dat"
         args['output'] = new_arg(output, '-o /tmp/', '.dat')
-    if nreps:
-        args['nreps'] = new_arg(nreps, '--nreps ')
 
-    if segment:
-        args['segment'] = new_arg(segment, '--abcde ')
+    args['nreps'] = new_arg(nreps, '--nreps ')
+    args['segment'] = new_arg(segment, '--abcde ')
     args['pattern'] = new_arg(pattern)
 
     globals.last_compose = args

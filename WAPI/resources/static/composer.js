@@ -4,6 +4,9 @@ const url_base = new URL(window.location.pathname, window.location.origin);
 const api_url = new URL(`http://${HOST}:${PORT}`);
 console.log(`Api url: ${api_url.toString()}`);
 
+var altered = false
+var lpp_timeout = null
+
 function upload_lines(e){
     const NEWLINE = '\n';
     file = e.target.files[0];
@@ -126,7 +129,6 @@ function download_compose(){
         alert(error);
     });
 }
-var lpp_timeout = null
 function lpp_update(e){
     value = e.target.value
     clearTimeout(lpp_timeout);
@@ -172,7 +174,6 @@ function trigger_soft_trigger(){
         alert(response);
     }, JSON.stringify(payload));
 }
-
 function animate_drop_area(e){
     drop_area = document.querySelector('#drop-area');
     if(e.type == 'dragenter' || e.type == 'dragover'){
@@ -183,7 +184,6 @@ function animate_drop_area(e){
     }
     e.stopPropagation()
 }
-
 function sync_last_compose(){
     let url = new URL(`${api_url.toString()}compose_last`);
     console.log(`[compose_last] ${url.toString()}`);
@@ -193,10 +193,12 @@ function sync_last_compose(){
         if(code >= 200 && code < 300){
             response = JSON.parse(response);
             for (const [key, values] of Object.entries(response)) {
-                elem = document.querySelector(`#compose-${key}`);
+                cmd_elem = document.querySelector(`#compose-${key}`);
+                input_elem = document.querySelector(`#input-compose-${key}`);
                 for (let target of ['pre', 'value', 'post']){
-                    elem.querySelector(`.${target}`).innerText = values[target];
+                    cmd_elem.querySelector(`.${target}`).innerText = values[target];
                 }
+                input_elem.value = values['value'];
             }
             compose_cmd.classList.add('animate_update');
         }
@@ -206,7 +208,7 @@ function sync_last_compose(){
 //Execution starts here
 window.onload = ()=>{
     listener_map = {
-        '.live_input': [['input'], [live_input_handler]],
+        '.live_input': [['input'], [live_input_handler, () => {altered = true}]],
         '#upload-input': [['change'], [upload_lines]],
         '#manifest-erase': [['click'], [erase_mainfest]],
         '#compose-start': [['click'], [start_compose]],
@@ -221,9 +223,11 @@ window.onload = ()=>{
         checkbox = document.querySelector('#manifest-refresh');
         if(checkbox.checked && document.visibilityState == 'visible'){
             update_manifest();
+            if (!altered){
+                sync_last_compose();
+            }
         }
         setTimeout(poll_manifest, 5000);
     }
-    sync_last_compose();
     poll_manifest();
 }

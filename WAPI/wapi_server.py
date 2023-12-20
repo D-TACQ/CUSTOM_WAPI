@@ -151,6 +151,10 @@ def init_html():
     if not os.path.islink('/var/www/apps'):
         print(f"[init_html] enabling /var/www/apps")
         os.symlink(api.web_dir, '/var/www/apps')
+    if not os.path.islink('/var/www/d-tacq/favicon.ico'):
+        print(f"[init_html] Link favicon")
+        try: os.symlink(os.path.join(api.res_dir, 'static', 'img', 'favicon.ico'), '/var/www/d-tacq/favicon.ico')
+        except: pass
 
 def generate_config(port):
     lines = [

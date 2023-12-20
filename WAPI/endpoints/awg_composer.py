@@ -5,6 +5,7 @@ import threading
 import re
 import json
 import time
+import subprocess
 import waves.build_templates as build_templates
 
 
@@ -89,13 +90,11 @@ def handle_manifest(response, api):
     return response
 
 def handle_compose_status(response, api):
-    print('handle_compose_status')
     response.body = json.dumps({'compose_status': globals.compose_status})
     response.content_type = 'application/json'
     return response
 
 def handle_compose_download(response, api):
-    print('handle_compose_download')
     max_size = 20 # MB
     url_base = 'composed_file'
     filepath = os.path.join('/tmp/', globals.last_file)
@@ -141,20 +140,25 @@ def get_manifest():
         return False
     with open(filepath) as f:
        return f.read()
-    
+
 def run_compose(cmd):
     start_time = time.time()
     globals.compose_status[0] = True
     globals.compose_status[1] = 'Composing'
     print(f"[COMPOSER] Running {cmd}")
-    return_code = os.system(cmd)
+    try:
+        out = subprocess.run(cmd, shell=True, timeout=30)
+    except Exception as e:
+        globals.compose_status[1] = f"Errored {e}"
+    else:
+        print(out)
+        if out.returncode == 0:
+            globals.compose_status[1] = f"Done {round(time.time() - start_time, 2)}s"
+        else:
+            globals.compose_status[1] = f"Returned with error"
+    finally:
+        globals.compose_status[0] = False
     print(f"[COMPOSER] Finished")
-    globals.compose_status[0] = False
-    if return_code > 0:
-        print(f"Errored {return_code}")
-        globals.compose_status[1] = 'Errored'
-        return
-    globals.compose_status[1] = f"Done {round(time.time() - start_time, 2)}s"
 
 
 ##manifest

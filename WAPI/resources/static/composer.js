@@ -1,7 +1,10 @@
 console.log('composer.js Loaded');
 
+if(typeof(PORT) == 'undefined'){
+    PORT = 5001;
+}
 const url_base = new URL(window.location.pathname, window.location.origin);
-const api_url = new URL(`http://${HOST}:${PORT}`);
+const api_url = new URL(`http://${url_base.host}:${PORT}`);
 console.log(`Api url: ${api_url.toString()}`);
 
 var altered = false

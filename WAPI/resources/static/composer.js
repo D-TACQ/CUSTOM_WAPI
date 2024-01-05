@@ -67,6 +67,7 @@ function erase_mainfest(e){
     let url = new URL(`${api_url.toString()}endpoint`);
     console.log(`[erase_templates] ${url.toString()}`)
     send_request(url.toString(), 'POST', (code, response) => {
+        if(code == 0) alert('Offline');
         update_manifest();
     }, JSON.stringify(payload));
 }
@@ -109,6 +110,7 @@ function start_compose(e){
             poll_until_complete();
             return;
         }
+        if(code == 0) response = 'Offline';
         alert(response);
     }, JSON.stringify(payload));
 }
@@ -125,11 +127,8 @@ function download_compose(){
             download_file(url, filename);
             return
         }
-        error = JSON.parse(response)['error'];
-        if (code == 0){
-            error = 'Offline';
-        }
-        alert(error);
+        if(code == 0) return alert('Offline');
+        alert(JSON.parse(response)['error']);
     });
 }
 function lpp_update(e){
@@ -154,6 +153,7 @@ function lpp_update(e){
                 compose_status.innerText = response;
                 return;
             }
+            if(code == 0) error = 'Offline';
             alert(response);
         }, JSON.stringify(payload));
     }
@@ -174,6 +174,7 @@ function trigger_soft_trigger(){
             compose_status.innerText = response;
             return;
         }
+        if(code == 0) response = 'Offline';
         alert(response);
     }, JSON.stringify(payload));
 }
@@ -201,6 +202,7 @@ function sync_last_compose(){
                 for (let target of ['pre', 'value', 'post']){
                     cmd_elem.querySelector(`.${target}`).innerText = values[target];
                 }
+                if(key == 'output' && values['pre'].startsWith('-o')) values['value'] = 'composed_file';
                 input_elem.value = values['value'];
             }
             compose_cmd.classList.add('animate_update');

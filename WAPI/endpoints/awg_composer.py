@@ -30,6 +30,8 @@ def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
         return False, f"Compose Running"
     if not get_manifest():
         return False, f"No Manifest"
+    if not segment:
+        return False, f"Segment is required"
 
     def new_arg(value, pre = '', post = ''):
         if not value:
@@ -45,8 +47,6 @@ def handle_run_composer(output, pattern, nreps='', segment='', **kwargs):
 
     awg_outputs = ['oneshot_rearm', 'oneshot', 'continuous']
     if output in awg_outputs:
-        if not segment:
-            return False, f"Segment is required" #possibly temp
         args['output'] = new_arg(output, '--awg_mode ')
 
     else:
@@ -150,7 +150,7 @@ def run_compose(cmd):
     globals.compose_status[1] = 'Composing'
     print(f"[COMPOSER] Running {cmd}")
     try:
-        out = subprocess.run(cmd, shell=True, timeout=30)
+        out = subprocess.run(cmd, shell=True, timeout=10)
     except Exception as e:
         globals.compose_status[1] = f"Errored {e}"
     else:

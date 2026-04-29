@@ -1,7 +1,9 @@
-WAPI - Web Api
+# WAPI - Web Api
 
+## Functionality
 Injects html into existing nginx server and runs api endpoints on port 5001 (default)
 
+## Configuration
 To enable endpoints create file /mnt/local/sysconfig/endpoints.wapi and add:
 
 export ENDPOINTS='endpoint1 endpoint2 endpoint3'
@@ -10,3 +12,5 @@ ie
 acq1001_590> cat /mnt/local/sysconfig/endpoints.wapi
 export ENDPOINTS='awg_composer'
 
+## Dependencies
+custom_hapi - https://github.com/D-TACQ/SWE_HAPI_package
